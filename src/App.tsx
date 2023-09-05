@@ -1,10 +1,25 @@
 import { useState } from 'react'
 import movieList from './movie-list.json'
 import './App.css'
+import encoding from 'encoding-japanese'
 
 function getRandomMovieName() {
   const length = movieList.length
   return movieList[Math.floor(Math.random() * length)]
+}
+
+function convertStringToShiftJisArray(str: string) {
+  const unicodeArray = []
+  for (let i = 0; i < str.length; i++) {
+    unicodeArray.push(str.charCodeAt(i))
+  }
+  // Shift_JISに変換
+  const sjisArray = encoding.convert(unicodeArray, {
+    to: 'SJIS',
+    from: 'UNICODE',
+  })
+  // SJISのキーワードをURLエンコード
+  return encoding.urlEncode(sjisArray)
 }
 
 function App() {
@@ -30,7 +45,9 @@ function App() {
             <ul>
               <li>
                 <a
-                  href={`https://google.com/search?q=${movieName}`}
+                  href={`https://google.com/search?q=${encodeURIComponent(
+                    movieName
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -39,7 +56,9 @@ function App() {
               </li>
               <li>
                 <a
-                  href={`https://www.amazon.co.jp/s?k=${movieName}`}
+                  href={`https://www.amazon.co.jp/s?k=${encodeURIComponent(
+                    movieName
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -48,7 +67,9 @@ function App() {
               </li>
               <li>
                 <a
-                  href={`https://video.unext.jp/freeword?query=${movieName}`}
+                  href={`https://video.unext.jp/freeword?query=${encodeURIComponent(
+                    movieName
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -57,7 +78,9 @@ function App() {
               </li>
               <li>
                 <a
-                  href={`https://movie-tsutaya.tsite.jp/netdvd/dvd/searchDvdHmo.do?k=${movieName}`}
+                  href={`https://movie-tsutaya.tsite.jp/netdvd/dvd/searchDvdHmo.do?k=${convertStringToShiftJisArray(
+                    movieName
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -66,7 +89,9 @@ function App() {
               </li>
               <li>
                 <a
-                  href={`https://filmarks.com/search/movies?q=${movieName}`}
+                  href={`https://filmarks.com/search/movies?q=${encodeURIComponent(
+                    movieName
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
