@@ -1,33 +1,82 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import movieList from './movie-list.json'
 import './App.css'
 
+function getRandomMovieName() {
+  const length = movieList.length
+  return movieList[Math.floor(Math.random() * length)]
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [movieHistory, setMovieHistory] = useState<string[]>([
+    getRandomMovieName(),
+  ])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button
+          onClick={() =>
+            setMovieHistory([getRandomMovieName(), ...movieHistory])
+          }
+        >
+          適当に映画を選ぶ
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {movieHistory.map((movieName) => {
+        return (
+          <>
+            <h2>{movieName}</h2>
+            <ul>
+              <li>
+                <a
+                  href={`https://google.com/search?q=${movieName}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://www.amazon.co.jp/s?k=${movieName}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Amazon
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://video.unext.jp/freeword?query=${movieName}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  U-NEXT
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://movie-tsutaya.tsite.jp/netdvd/dvd/searchDvdHmo.do?k=${movieName}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TSUTAYA DISCAS
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://filmarks.com/search/movies?q=${movieName}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Filmarks
+                </a>
+              </li>
+            </ul>
+          </>
+        )
+      })}
     </>
   )
 }
