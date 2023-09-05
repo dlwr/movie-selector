@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "build": "rm -R docs || vite build && cp -r dist docs"
+    "build": "rm -rf docs dist && vite build && cp -r dist docs"
   },
   "dependencies": {
     "encoding-japanese": "^2.0.0",

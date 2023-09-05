@@ -29,6 +29,12 @@ function App() {
 
   return (
     <>
+      <div>
+        <a href="https://note.com/knightofodessa/n/n8047fe1576aa">
+          https://note.com/knightofodessa/n/n8047fe1576aa
+        </a>
+        からリストを拝借して、ランダムに一本の映画を選びます
+      </div>
       <div className="card">
         <button
           onClick={() =>
